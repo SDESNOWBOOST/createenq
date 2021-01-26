@@ -1,0 +1,38 @@
+const axios = require('axios');
+
+// got documentation: https://github.com/sindresorhus/got#readme
+
+module.exports = async (data, logger, callback) => {
+
+  // URL
+//  const myurl = 'https://dev65356.service-now.com/api/now/table/incident';
+  const headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer l90VtP-kzfnuYKZpLpAb5DA8QkBRpmj5ZYa64WcPky9UqMp97qcherkDajQjGc-lIGCXlKX4AHLFP2176P73uA',
+  };
+
+  // Construct your post data
+  const postData = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Encoding': 'gzip, deflate, br',
+//    'Authorization': 'Bearer l90VtP-kzfnuYKZpLpAb5DA8QkBRpmj5ZYa64WcPky9UqMp97qcherkDajQjGc-lIGCXlKX4AHLFP2176P73uA',
+  };
+
+  // Call your service
+  const myurl = 'https://dev65356.service-now.com/api/now/table/incident';
+  const httpResult = await axios.post(myurl, postData, {headers: headers});
+  const myResponse = httpResult.data;
+  logger.log(httpResult.data);
+
+  // Construct your result
+  const result = {
+    response: [
+      { "key": "incident", "value": myResponse.result.link }
+    ]
+  };
+
+  // Return your result
+  callback(result);
+
+};
